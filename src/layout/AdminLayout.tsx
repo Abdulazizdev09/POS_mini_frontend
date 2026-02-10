@@ -9,13 +9,13 @@ function AdminLayout() {
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => navigate("/orders")}
-                        className="bg-black text-white cursor-pointer p-2 rounded-lg">
+                        className="bg-black text-white cursor-pointer p-2 mr-3 rounded-lg">
                         <ArrowLeft className="w-10 h-10" />
                     </button>
                     <h1 className="text-2xl font-extrabold">Admin</h1>
                 </div>
             </header>
-            <main className="flex-1 overflow-auto  p-4">
+            <main className=" flex-1 overflow-auto  p-4">
                 <Outlet />
             </main>
         </div>

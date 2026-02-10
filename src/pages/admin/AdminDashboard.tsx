@@ -34,8 +34,8 @@ export default function AdminDashboard() {
             <div className="w-full max-w-7xl">
                 <div className="mb-6">
                     <h2 className="text-3xl font-extrabold">Admin Dashboard</h2>
+                    <h2 className="text-xl">Manage restaurant settings and menu</h2>
                 </div>
-
                 <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {cards.map((c) => {
                         const Icon = c.icon;
@@ -44,13 +44,12 @@ export default function AdminDashboard() {
                                 key={c.path}
                                 onClick={() => navigate(c.path)}
                                 className="w-full text-left border border-black bg-white p-6 min-h-50 flex items-center justify-between
-                                            active:translate-y-px active:bg-gray-100 focus:outline-none ">
+                                            active:translate-y-px active:bg-gray-100 focus:outline-none cursor-pointer ">
                                 <div className="pr-4">
                                     <h3 className="text-3xl font-extrabold">{c.title}</h3>
                                     <p className="text-base opacity-80 mt-2">{c.desc}</p>
                                 </div>
                                 <Icon className="w-12 h-12" />
-
                             </button>
                         );
                     })}
