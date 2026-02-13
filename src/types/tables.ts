@@ -1,5 +1,6 @@
 export interface TableDto {
     readonly id: string;
+    
     readonly zoneId: string;
     name: string;
     capacity: number;

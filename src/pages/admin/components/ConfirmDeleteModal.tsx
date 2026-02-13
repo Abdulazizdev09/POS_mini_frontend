@@ -1,40 +1,46 @@
+import ModalShell from "./ModalShell";
+
 type Props = {
     open: boolean;
+    title?: string;
+    message: string;
     onClose: () => void;
     onConfirm: () => void;
+    confirmText?: string;
+    cancelText?: string;
 };
 
-export default function ConfirmDeleteModal({ open, onClose, onConfirm }: Props) {
-    if (!open) return null;
-
+export default function ConfirmDeleteModal({
+    open,
+    title = "Confirm",
+    message,
+    onClose,
+    onConfirm,
+    confirmText = "YES",
+    cancelText = "NO",
+}: Props
+) {
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-            {/* overlay */}
-            <button
-                className="absolute inset-0 bg-black/70 cursor-default"
-                onClick={onClose}
-                aria-label="Close modal overlay"
-            />
-
-            {/* modal */}
-            <div className="relative w-125 max-w-[92vw] bg-[#d9d9d9] border border-black p-8 flex flex-col items-center text-center">
-                <h2 className="text-2xl font-extrabold mb-8">Are you sure that you want to delete this zone?</h2>
-
-                <div className="flex gap-10 mt-4 w-full justify-center">
+        <ModalShell
+            open={open}
+            title={title}
+            onClose={onClose}
+            footer={
+                <>
                     <button
                         onClick={onClose}
-                        className="bg-black text-white w-32 py-3 font-extrabold text-xl active:brightness-90"
-                    >
-                        NO
+                        className="bg-black text-white w-32 py-3 font-extrabold text-xl active:brightness-90">
+                        {cancelText}
                     </button>
                     <button
                         onClick={onConfirm}
-                        className="bg-[#ff0000] text-white w-32 py-3 font-extrabold text-xl active:brightness-90"
-                    >
-                        YES
+                        className="bg-[#ff0000] text-white w-32 py-3 font-extrabold text-xl active:brightness-90">
+                        {confirmText}
                     </button>
-                </div>
-            </div>
-        </div>
+                </>
+            }
+        >
+            <div className="text-center text-2xl font-extrabold">{message}</div>
+        </ModalShell>
     );
 }
