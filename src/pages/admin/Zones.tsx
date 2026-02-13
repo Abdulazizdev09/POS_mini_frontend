@@ -37,7 +37,7 @@ function Zones() {
     }, [zones, deleteId]);
 
     const handleEdit = (zoneId: string, zoneName: string, zoneDescription: string) => {
-        setIsAdding(false); // UI only
+        setIsAdding(false);
         setEditingId(zoneId);
         setDraftName(zoneName);
         setDraftDescription(zoneDescription);
@@ -45,7 +45,7 @@ function Zones() {
     };
 
     const handleCancel = () => {
-        setIsAdding(false); // UI only
+        setIsAdding(false);
         setEditingId(null);
         setDraftName("");
         setDraftDescription("");
@@ -55,14 +55,15 @@ function Zones() {
     const handleSave = async () => {
         if (!editingId) return;
 
-        if (draftName.trim() === "") {
-            setIsInputEmpty(true);
-            return;
-        }
+
 
         const name = draftName.trim();
         const description = draftDescription.trim();
 
+        if (name === "") {
+            setIsInputEmpty(true);
+            return;
+        }
         try {
             await updateZone(editingId, { name, description });
             setZones((prev) =>
@@ -144,7 +145,7 @@ function Zones() {
                 )}
             </div>
 
-            {/* Add Form (UI only, safe placeholder) */}
+
             {isAdding && (
                 <div className="bg-blue-50 border-2 border-blue-600 rounded-xl p-6 mb-6">
                     <h3 className="text-xl font-bold text-neutral-900 mb-4">Add New Zone</h3>
@@ -203,7 +204,6 @@ function Zones() {
                 </div>
             )}
 
-            {/* Zones List */}
             <div className="space-y-4">
                 {zones.map((zone) => (
                     <div
@@ -304,7 +304,6 @@ function Zones() {
                 </div>
             )}
 
-            {/* Delete Modal */}
             {deleteId && (
                 <ConfirmDeleteModal
                     open={!!deleteId}
