@@ -7,6 +7,7 @@ const api = axios.create({
     timeout: 7000,
     headers: {
         "Content-Type": "application/json",
+        'x-device-api-key': 'ttdev1_f0da4845-77ea-4e91-a3eb-357eede889e9_XrqdQCj2VF1Hm2wXvsLT1sn6rnlBT5QKeITyMLgEDZo',
         Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`
     },
 })

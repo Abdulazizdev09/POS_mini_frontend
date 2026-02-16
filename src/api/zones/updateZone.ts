@@ -8,6 +8,6 @@ export async function updateZone(
     id: string,
     body: { name: string; description: string }
 ) {
-    const res = await api.patch<ApiResponse<ZoneDto[]>>(`/api/zones/${id}`, body)
-    return res?.data?.data ?? []
+    const res = await api.patch<ApiResponse<ZoneDto>>(`/api/zones/${id}`, body)
+    return res?.data?.data;
 }

@@ -21,11 +21,20 @@ function Zones() {
     const [draftName, setDraftName] = useState<string>("");
     const [draftDescription, setDraftDescription] = useState<string>("");
 
+    const fetchZones = async () => {
+        setLoading(true);
+        try {
+            const data = await getZones();
+            setZones(data);
+        } catch (error) {
+            console.error("Failed to get Zones", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        getZones()
-            .then((data) => setZones(data))
-            .catch((error) => console.error("Failed to get Zones", error.message))
-            .finally(() => setLoading(false));
+        fetchZones();
     }, []);
 
     const zoneCountText = useMemo(() => {
@@ -54,9 +63,7 @@ function Zones() {
 
     const handleSave = async () => {
         if (!editingId) return;
-
-
-
+        
         const name = draftName.trim();
         const description = draftDescription.trim();
 
@@ -66,9 +73,7 @@ function Zones() {
         }
         try {
             await updateZone(editingId, { name, description });
-            setZones((prev) =>
-                prev.map((z) => (z.id === editingId ? { ...z, name, description } : z))
-            );
+            await fetchZones(); 
             handleCancel();
         } catch (error) {
             console.log(error);
@@ -88,7 +93,7 @@ function Zones() {
 
         try {
             await softDeleteZone(deleteId);
-            setZones((prev) => prev.filter((z) => z.id !== deleteId));
+            await fetchZones(); 
         } catch (error) {
             console.log(error);
         } finally {
@@ -113,8 +118,8 @@ function Zones() {
             return;
         }
         try {
-            const newCreated = await createZone({ name, description })
-            setZones((prev) => [newCreated, ...prev])
+            await createZone({ name, description })
+            await fetchZones();
             handleCancel()
         } catch (error) {
             console.log(error);

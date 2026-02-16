@@ -1,3 +1,4 @@
+import { Save, X } from "lucide-react";
 import { useState } from "react";
 import ModalShell from "./ModalShell";
 
@@ -10,7 +11,7 @@ type Props = {
     title?: string;
 };
 
-export default function EditZoneModal({ open, value, onChange, onClose, onSave, title = "Change Zone Info" }: Props) {
+export default function EditZoneModal({ open, value, onChange, onClose, onSave, title = "Edit Zone" }: Props) {
     const [attemptedSave, setAttemptedSave] = useState(false);
     const [touched, setTouched] = useState(false);
 
@@ -33,42 +34,57 @@ export default function EditZoneModal({ open, value, onChange, onClose, onSave, 
             title={title}
             onClose={onClose}
             footer={
-                <button
-                    onClick={handleSave}
-                    className="px-10 py-4 bg-[#26b24a] text-white text-2xl font-extrabold active:brightness-90"
-                >
-                    Save
-                </button>
+                <div className="flex gap-3">
+                    <button
+                        onClick={onClose}
+                        className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-neutral-200 text-neutral-900 rounded-lg transition-colors text-lg font-medium cursor-pointer active:brightness-90"
+                    >
+                        <X className="w-5 h-5" />
+                        Cancel
+                    </button>
+                    <button
+                        onClick={handleSave}
+                        className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-green-600 text-white rounded-lg transition-colors text-lg font-medium cursor-pointer active:brightness-90"
+                    >
+                        <Save className="w-5 h-5" />
+                        Save
+                    </button>
+                </div>
             }
         >
             <div className="space-y-6">
                 <div>
-                    <label className="block text-xl font-extrabold mb-2">
-                        Name:<span className="text-red-500">*</span>
+                    <label className="block text-base font-medium text-neutral-700 mb-2">
+                        Zone Name <span className="text-red-700">*</span>
                     </label>
                     <input
                         value={value.name}
-                        onChange={(e) => onChange({ ...value, name: e.target.value })}
+                        onChange={(e) => {
+                            onChange({ ...value, name: e.target.value });
+                            setTouched(true);
+                        }}
                         onBlur={() => setTouched(true)}
-                        className={`w-105 max-w-full border p-3 text-xl outline-none ${showError ? "border-red-500 bg-red-50" : "border-black bg-white"
+                        placeholder="Enter zone name"
+                        className={`w-full px-4 py-3 text-lg border-2 rounded-lg focus:outline-none transition-colors ${showError ? "border-red-500 bg-red-50" : "border-neutral-300 bg-white focus:border-blue-600"
                             }`}
-                        placeholder="Zone name"
+                        autoFocus
                     />
-                    {showError && <p className="text-red-500 mt-1 text-sm font-bold">Name is required</p>}
-
+                    {showError && <p className="text-red-700 font-bold mt-2">Name is required</p>}
                 </div>
+
                 <div>
-                    <label className="block text-xl font-extrabold mb-2">Description:</label>
+                    <label className="block text-base font-medium text-neutral-700 mb-2">
+                        Description
+                    </label>
                     <textarea
                         value={value.description}
                         onChange={(e) => onChange({ ...value, description: e.target.value })}
-                        className="w-105 max-w-full h-27 border border-black bg-white p-3 text-xl outline-none resize-none"
-                        placeholder="Zone description"
+                        placeholder="Enter description"
+                        rows={3}
+                        className="w-full px-4 py-3 text-lg border-2 border-neutral-300 rounded-lg focus:border-blue-600 focus:outline-none bg-white transition-colors resize-none"
                     />
                 </div>
             </div>
-
         </ModalShell>
-
     );
 }

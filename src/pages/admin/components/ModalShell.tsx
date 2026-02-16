@@ -1,34 +1,35 @@
+import { X } from "lucide-react";
 import type { ReactNode } from "react";
 
 export default function ModalShell({ open, title, onClose, children, footer }: Props) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* overlay */}
-      <button
-        className="absolute inset-0 bg-black/70 cursor-default"
+      <div
+        className="absolute inset-0 bg-neutral-900/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-label="Close modal overlay"
       />
 
       {/* box */}
-      <div className="relative w-205 max-w-[92vw] bg-[#d9d9d9] border border-black p-8">
-        <div className="flex items-start justify-between gap-4">
-          <h2 className="text-2xl font-extrabold">{title}</h2>
+      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl p-8 transform transition-all">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <h2 className="text-2xl font-bold text-neutral-900">{title}</h2>
 
           <button
             onClick={onClose}
-            className="w-10 h-10 bg-red-600 text-white text-2xl font-extrabold flex items-center justify-center active:brightness-90"
+            className="p-2 hover:bg-neutral-100 rounded-full transition-colors active:brightness-90"
             aria-label="Close"
           >
-            X
+            <X className="w-6 h-6 text-neutral-500" />
           </button>
         </div>
 
-        <div className="mt-6">{children}</div>
+        <div>{children}</div>
 
-        {footer ? <div className="mt-10 flex justify-end gap-4">{footer}</div> : null}
+        {footer ? <div className="mt-8">{footer}</div> : null}
       </div>
     </div>
   );
